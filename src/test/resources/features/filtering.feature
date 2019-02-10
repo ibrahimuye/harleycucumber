@@ -1,4 +1,3 @@
-@uc
 Feature: filtering functionality of craigslist
 
   Scenario Outline:: filtering test
