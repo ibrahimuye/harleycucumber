@@ -11,9 +11,9 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/cybertek/steps"
         , dryRun = false,
-        tags = "@uc",
+//        tags = "@uc",
 
-        plugin = {"pretty", "html:target/Destination"}
+        plugin = {"html:target/Destination"}
 )
 public class CukesRunner {
 }

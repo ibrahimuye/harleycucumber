@@ -26,6 +26,10 @@ public class MainPage {
     @FindBy(name = "min_engine_displacement_cc")
     public WebElement engineDisplacementBox;
 
+    @FindBy(id = "subcatAbb")
+    public WebElement subCatSearchBox;
+
+
 
 
 

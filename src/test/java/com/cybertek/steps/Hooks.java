@@ -16,7 +16,7 @@ public class Hooks {
 
     @Before(order = 2)
     public void setUp(){
-        System.out.println("I am setting up the test from the Hooks class!!!");
+//        System.out.println("I am setting up the test from the Hooks class!!!");
         Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         // you can also add maximize screen here
@@ -24,7 +24,7 @@ public class Hooks {
 
     @After
     public void tearDown(Scenario scenario){
-        System.out.println("I am reporting the results");
+//        System.out.println("I am reporting the results");
         // I want to take screenshot when current scenario fails.
         // scenario.isFailed()  --> tells if the scenario failed or not
         if (scenario.isFailed()) {
@@ -34,11 +34,10 @@ public class Hooks {
             scenario.embed(screenshot, "image/png");
         }
 
-        System.out.println("Closing driver");
-//        Driver.closeDriver();
+//        System.out.println("Closing driver");
+        Driver.closeDriver();
     }
 
 
 }
-    // git fetch origin
-    //git reset --hard origin/master
+

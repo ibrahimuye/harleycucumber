@@ -9,6 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.Select;
 
 import static com.cybertek.utilities.BrowserUtils.*;
 
@@ -25,7 +26,7 @@ public class FilteringSteps extends BrowserUtils {
 
     @Then("user clicks on the link {string}")
     public void user_clicks_on_the_link(String product) {
-        product=ConfigurationReader.getProperty("product");
+//        product=ConfigurationReader.getProperty("product");
         clickByText(product).click();
 
     }
@@ -45,14 +46,14 @@ public class FilteringSteps extends BrowserUtils {
 
     @Then("user types in the ZIP text box {string}")
     public void user_types_in_the_ZIP_text_box(String zip) {
-        zip = ConfigurationReader.getProperty("zipCode");
+//        zip = ConfigurationReader.getProperty("zipCode");
         pages.mainPage().zipCodeBox.sendKeys(zip);
     }
 
     @Then("user types in the year text box {string}")
     public void user_types_in_the_year_text_box(String minYear) {
         minYear = ConfigurationReader.getProperty("minYear");
-        pages.mainPage().minYearBox.sendKeys(minYear);
+        pages.mainPage().minYearBox.sendKeys(minYear+Keys.ENTER);
     }
 
     @Then("user types in the min engine displacement text box {string}")
@@ -63,8 +64,10 @@ public class FilteringSteps extends BrowserUtils {
 
     @When("the filtered options of {string} appear on the page")
     public void the_filtered_options_of_appear_on_the_page(String product) {
-        product=ConfigurationReader.getProperty("product");
-        Assert.assertTrue(Driver.getDriver().getTitle().contains(product));
+
+        Select select = new Select(pages.mainPage().subCatSearchBox);
+        Assert.assertTrue(select.getFirstSelectedOption().getText().equals(product));
+
     }
 
 
@@ -74,12 +77,12 @@ public class FilteringSteps extends BrowserUtils {
         String minYear = ConfigurationReader.getProperty("minYear");
         clickByPartialText(make).click(); // we are in the product page now
         waitForPageToLoad(6);
-        System.out.println(Driver.getDriver().getTitle());
-        pages.productPage().yearTextBox.getText();
+//        System.out.println(Driver.getDriver().getTitle());
+//        pages.productPage().yearTextBox.getText();
         String yearText = pages.productPage().yearTextBox.getText();
-        System.out.println(yearText);
+//        System.out.println(yearText);
         String [] yearWords = yearText.split(" ");
-        System.out.println(yearWords[0]);
+//        System.out.println(yearWords[0]);
         String minYearAsText =yearWords[0];
         int year = Integer.valueOf(minYearAsText);
         Assert.assertTrue("the year is not as filetered",year>=Integer.valueOf(minYear));
@@ -88,17 +91,4 @@ public class FilteringSteps extends BrowserUtils {
 
     }
 
-    @Then("min engine displacement of the selected motorcycle must be greater or equal to {string}")
-    public void min_engine_displacement_of_the_selected_motorcycle_must_be_greater_or_equal_to(String string) {
-        String engineSize = ConfigurationReader.getProperty("engineSize"); // entered data
-        String actualEngineSizeText = pages.productPage().engineDisplacmentText.getText();
-        String [] actualEngineWords =actualEngineSizeText.split(":");
-        String actualEnginSize = actualEngineWords[1].trim();
-        int actualEngineSizeAsInt =Integer.valueOf(actualEnginSize);
-        System.out.println(actualEngineSizeAsInt);
-        System.out.println(Integer.valueOf(engineSize));
-        Assert.assertTrue(actualEngineSizeAsInt>=Integer.valueOf(engineSize));
-
-
-    }
-}
+  }
